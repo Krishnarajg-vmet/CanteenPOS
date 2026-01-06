@@ -24,9 +24,6 @@ public class Area extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="city_id", nullable = false)
 	private City city;
-	
-	protected Area() {
-	}
 
 	public UUID getId() {
 		return id;

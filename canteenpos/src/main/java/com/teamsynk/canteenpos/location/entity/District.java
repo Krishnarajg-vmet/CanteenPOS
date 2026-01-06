@@ -21,9 +21,6 @@ public class District extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="state_id", nullable = false)
 	private State state;
-	
-	protected District() {
-	}
 
 	public UUID getId() {
 		return id;

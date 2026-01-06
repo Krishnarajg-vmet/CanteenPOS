@@ -9,18 +9,20 @@ public class StateResponseDto {
 	private String stateName;
 	private UUID countryId;
 	private String countryName;
+	private Boolean isActive;
 	private Instant createdDt;
 	private Instant modifiedDt;
 	private UUID createdBy;
 	private UUID modifiedBy;
 	
-	public StateResponseDto(UUID id, String stateName, UUID countryId, String countryName, Instant createdDt,
+	public StateResponseDto(UUID id, String stateName, UUID countryId, String countryName,Boolean isActive, Instant createdDt,
 			Instant modifiedDt, UUID createdBy, UUID modifiedBy) {
 		super();
 		this.id = id;
 		this.stateName = stateName;
 		this.countryId = countryId;
 		this.countryName = countryName;
+		this.isActive = isActive;
 		this.createdDt = createdDt;
 		this.modifiedDt = modifiedDt;
 		this.createdBy = createdBy;
@@ -38,6 +40,9 @@ public class StateResponseDto {
 	}
 	public String getCountryName() {
 		return countryName;
+	}
+	public Boolean getIsActive() {
+		return isActive;
 	}
 	public Instant getCreatedDt() {
 		return createdDt;

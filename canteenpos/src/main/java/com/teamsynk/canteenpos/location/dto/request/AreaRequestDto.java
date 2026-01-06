@@ -6,6 +6,7 @@ public class AreaRequestDto {
 	
 	private String areaName;
 	private UUID cityId;
+	
 	public String getAreaName() {
 		return areaName;
 	}
