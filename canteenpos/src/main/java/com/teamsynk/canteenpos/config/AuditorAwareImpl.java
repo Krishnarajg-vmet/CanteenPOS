@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.teamsynk.canteenpos.security.UserPrincipal;
 
-@Component
+@Component("auditorAware")
 public class AuditorAwareImpl implements AuditorAware<UUID> {
 
     @Override
