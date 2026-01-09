@@ -1,5 +1,6 @@
 package com.teamsynk.canteenpos.user.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -18,20 +19,8 @@ public class Role {
 	@Column(name="role_name", nullable = false, unique = true)
 	private String roleName;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "role_permission",
-        joinColumns = @JoinColumn(name = "role_id"),
-        inverseJoinColumns = @JoinColumn(name = "permission_id")
-    )
-    private Set<Permission> permissions;
-	
-	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private Set<User> users;
-	
-	protected Role() {
-		
-	}
+	@OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<RolePermission> rolePermissions = new HashSet<>();
 
 	public UUID getId() {
 		return id;
@@ -43,14 +32,6 @@ public class Role {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
-	}
-
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
 	}
 	
 	@Override
@@ -65,5 +46,13 @@ public class Role {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+	public Set<RolePermission> getRolePermissions() {
+		return rolePermissions;
+	}
+
+	public void setRolePermissions(Set<RolePermission> rolePermissions) {
+		this.rolePermissions = rolePermissions;
+	}
 
 }

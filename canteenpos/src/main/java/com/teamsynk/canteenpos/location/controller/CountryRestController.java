@@ -40,6 +40,11 @@ public class CountryRestController {
     public ResponseEntity<List<CountryResponseDto>> getAllActiveCountries() {
         return ResponseEntity.ok(countryService.getAllActiveCountries());
     }
+    
+    @GetMapping("/all")
+    public ResponseEntity<List<CountryResponseDto>> getAllCountries() {
+        return ResponseEntity.ok(countryService.getAllCountries());
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<CountryResponseDto> updateCountry(

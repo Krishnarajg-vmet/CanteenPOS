@@ -2,13 +2,14 @@ package com.teamsynk.canteenpos.organization.entity;
 
 import java.util.UUID;
 
+import com.teamsynk.canteenpos.common.BaseEntity;
 import com.teamsynk.canteenpos.common.util.IdGenerator;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="designation")
-public class Designation {
+public class Designation extends BaseEntity{
 	
 	@Id
 	@Column(name="designation_id", nullable = false, updatable = false)
@@ -16,10 +17,6 @@ public class Designation {
 	
 	@Column(name="designation_name", nullable = false, unique = true)
 	private String designationName;
-	
-	protected Designation() {
-		
-	}
 
 	public UUID getId() {
 		return id;

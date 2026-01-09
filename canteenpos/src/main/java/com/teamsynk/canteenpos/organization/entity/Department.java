@@ -22,9 +22,6 @@ public class Department extends BaseEntity{
 	
 	@Column(name="department_code", nullable = false, unique = true)
 	private String departmentCode;
-	
-	@ManyToMany(mappedBy = "departments", fetch = FetchType.LAZY)
-    private Set<User> users;
 
 	public UUID getId() {
 		return id;
@@ -45,15 +42,5 @@ public class Department extends BaseEntity{
 	public void setDepartmentCode(String departmentCode) {
 		this.departmentCode = departmentCode;
 	}
-
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-	
-	
 
 }

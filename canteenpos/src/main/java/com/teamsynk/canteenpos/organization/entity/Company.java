@@ -17,10 +17,6 @@ public class Company extends BaseEntity {
 	
 	@Column(name="company_name", nullable = false, unique = true)
 	private String companyName;
-	
-	protected Company() {
-		
-	}
 
 	public UUID getId() {
 		return id;

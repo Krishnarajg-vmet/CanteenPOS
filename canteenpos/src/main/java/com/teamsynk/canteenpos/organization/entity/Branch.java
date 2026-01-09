@@ -26,10 +26,6 @@ public class Branch extends BaseEntity {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="company_id", nullable = false)
 	private Company company;
-	
-	protected Branch() {
-		
-	}
 
 	public UUID getId() {
 		return id;

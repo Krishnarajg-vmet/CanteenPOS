@@ -55,7 +55,7 @@ public class CountryService {
                 .collect(Collectors.toList());
     }
     
-    public List<CountryResponseDto> getAllStates() {
+    public List<CountryResponseDto> getAllCountries() {
     	return countryRepository.findAll()
     			.stream()
     			.map(CountryMapper::toDto)

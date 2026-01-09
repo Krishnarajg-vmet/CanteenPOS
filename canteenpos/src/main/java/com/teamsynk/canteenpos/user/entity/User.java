@@ -1,5 +1,6 @@
 package com.teamsynk.canteenpos.user.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,13 +26,8 @@ public class User extends BaseEntity {
 	@Column(name="password", nullable = false)
 	private String password;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-	    name = "user_role",
-	    joinColumns = @JoinColumn(name = "user_id"),
-	    inverseJoinColumns = @JoinColumn(name = "role_id")
-	)
-	private Set<Role> roles;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<UserRole> userRoles = new HashSet<>();
 	
 	@Column(name="password_reset_required")
 	private Boolean passwordResetRequired = true;
@@ -40,21 +36,11 @@ public class User extends BaseEntity {
 	@JoinColumn(name="employee_id", nullable = false)
 	private Employee employee;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-	    name = "user_department",
-	    joinColumns = @JoinColumn(name = "user_id"),
-	    inverseJoinColumns = @JoinColumn(name = "department_id")
-	)
-	private Set<Department> departments;
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-	    name = "user_branch",
-	    joinColumns = @JoinColumn(name = "user_id"),
-	    inverseJoinColumns = @JoinColumn(name = "branch_id")
-	)
-	private Set<Branch> locations;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<UserDepartment> userDepartments = new HashSet<>();
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<UserBranch> userBranches = new HashSet<>();
 	
 	protected User() {
 		
@@ -80,14 +66,6 @@ public class User extends BaseEntity {
 		this.password = password;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
 	public Boolean getPasswordResetRequired() {
 		return passwordResetRequired;
 	}
@@ -104,22 +82,30 @@ public class User extends BaseEntity {
 		this.employee = employee;
 	}
 
-	public Set<Department> getDepartments() {
-		return departments;
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
 	}
 
-	public void setDepartments(Set<Department> departments) {
-		this.departments = departments;
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 
-	public Set<Branch> getLocations() {
-		return locations;
+	public Set<UserDepartment> getUserDepartments() {
+		return userDepartments;
 	}
 
-	public void setLocations(Set<Branch> locations) {
-		this.locations = locations;
+	public void setUserDepartments(Set<UserDepartment> userDepartments) {
+		this.userDepartments = userDepartments;
 	}
-	
+
+	public Set<UserBranch> getUserBranches() {
+		return userBranches;
+	}
+
+	public void setUserBranches(Set<UserBranch> userBranches) {
+		this.userBranches = userBranches;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 	    if (this == o) return true;
@@ -130,7 +116,8 @@ public class User extends BaseEntity {
 
 	@Override
 	public int hashCode() {
-	    return getClass().hashCode();
+	   
+		return getClass().hashCode();
 	}
 
 }

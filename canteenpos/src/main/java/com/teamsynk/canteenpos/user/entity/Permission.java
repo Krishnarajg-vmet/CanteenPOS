@@ -18,8 +18,8 @@ public class Permission {
     @Column(name = "permission_name", nullable = false, unique = true)
     private String permissionName;
 
-    @ManyToMany(mappedBy = "permissions", fetch = FetchType.LAZY)
-    private Set<Role> roles;
+    @Column(name = "description", nullable = false)
+    private String description;
 
     protected Permission() {}
 
@@ -33,14 +33,6 @@ public class Permission {
 
     public void setPermissionName(String permissionName) {
         this.permissionName = permissionName;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     @Override
