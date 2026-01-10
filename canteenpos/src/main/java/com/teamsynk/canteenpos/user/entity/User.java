@@ -41,10 +41,6 @@ public class User extends BaseEntity {
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<UserBranch> userBranches = new HashSet<>();
-	
-	protected User() {
-		
-	}
 
 	public UUID getId() {
 		return id;

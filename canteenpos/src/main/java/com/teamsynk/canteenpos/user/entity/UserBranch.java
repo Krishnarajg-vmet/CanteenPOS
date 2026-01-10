@@ -27,6 +27,11 @@ public class UserBranch extends BaseEntity {
     @JoinColumn(name = "branch_id", nullable = false)
     private Branch branch;
 
+    public UserBranch(User user, Branch branch) {
+        this.user = user;
+        this.branch = branch;
+    }
+    
 	public UUID getId() {
 		return id;
 	}

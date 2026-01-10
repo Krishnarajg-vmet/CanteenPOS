@@ -4,13 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import com.teamsynk.canteenpos.common.BaseEntity;
 import com.teamsynk.canteenpos.common.util.IdGenerator;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="role")
-public class Role {
+public class Role extends BaseEntity {
 	
 	@Id
 	@Column(name="role_id", nullable = false, updatable = false)

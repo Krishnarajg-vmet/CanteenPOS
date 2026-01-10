@@ -27,6 +27,11 @@ public class UserDepartment extends BaseEntity {
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
+    public UserDepartment(User user, Department department) {
+        this.user = user;
+        this.department = department;
+    }
+
 	public UUID getId() {
 		return id;
 	}

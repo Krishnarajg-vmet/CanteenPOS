@@ -33,6 +33,11 @@ public class UserRole extends BaseEntity {
     @JoinColumn(name = "branch_id")
     private Branch branch;
 
+    public UserRole(User user, Role role) {
+        this.user = user;
+        this.role = role;
+    }
+    
 	public UUID getId() {
 		return id;
 	}

@@ -1,15 +1,15 @@
 package com.teamsynk.canteenpos.user.entity;
 
-import java.util.Set;
 import java.util.UUID;
 
+import com.teamsynk.canteenpos.common.BaseEntity;
 import com.teamsynk.canteenpos.common.util.IdGenerator;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "permission")
-public class Permission {
+public class Permission extends BaseEntity{
 
     @Id
     @Column(name = "permission_id", nullable = false, updatable = false)
@@ -20,8 +20,6 @@ public class Permission {
 
     @Column(name = "description", nullable = false)
     private String description;
-
-    protected Permission() {}
 
     public UUID getId() {
         return id;
@@ -47,4 +45,12 @@ public class Permission {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
