@@ -21,10 +21,10 @@ public class FoodCategory extends BaseEntity {
     private UUID id;
 
     @Column(name = "category_code", nullable = false, length = 50)
-    private String categoryCode;
+    private String foodCategoryCode;
 
     @Column(name = "category_name", nullable = false, length = 150)
-    private String categoryName;
+    private String foodCategoryName;
 
     @ManyToOne
     @JoinColumn(name = "parent_category_id")
@@ -44,14 +44,6 @@ public class FoodCategory extends BaseEntity {
 		return id;
 	}
 
-	public String getCategoryCode() {
-		return categoryCode;
-	}
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
 	public FoodCategory getParentCategory() {
 		return parentCategory;
 	}
@@ -60,20 +52,28 @@ public class FoodCategory extends BaseEntity {
 		return sortOrder;
 	}
 
-	public void setCategoryCode(String categoryCode) {
-		this.categoryCode = categoryCode;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
 	public void setParentCategory(FoodCategory parentCategory) {
 		this.parentCategory = parentCategory;
 	}
 
 	public void setSortOrder(Integer sortOrder) {
 		this.sortOrder = sortOrder;
+	}
+
+	public String getFoodCategoryCode() {
+		return foodCategoryCode;
+	}
+
+	public String getFoodCategoryName() {
+		return foodCategoryName;
+	}
+
+	public void setFoodCategoryCode(String foodCategoryCode) {
+		this.foodCategoryCode = foodCategoryCode;
+	}
+
+	public void setFoodCategoryName(String foodCategoryName) {
+		this.foodCategoryName = foodCategoryName;
 	}
 
 }

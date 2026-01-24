@@ -9,14 +9,17 @@ import com.teamsynk.canteenpos.common.util.IdGenerator;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="food")
+@Table(name="food",
+		uniqueConstraints = {
+				@UniqueConstraint(columnNames = {"food_name", "food_category_id"})
+				})
 public class Food extends BaseEntity {
 	
 	@Id
 	@Column(name="food_id", nullable = false, updatable = false)
 	private UUID id;
 	
-	@Column(name="food_name", nullable = false, unique = true)
+	@Column(name="food_name", nullable = false)
 	private String foodName;
 	
 	@Column(name="food_code", nullable = false, unique = true)
