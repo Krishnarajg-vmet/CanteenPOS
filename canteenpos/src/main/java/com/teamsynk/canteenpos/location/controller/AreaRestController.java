@@ -57,4 +57,12 @@ public class AreaRestController {
 		areaService.deleteAreaById(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping("/activate/{id}")
+	public ResponseEntity<Void> activateAreaById(
+			@PathVariable UUID id) {
+		areaService.activateAreaById(id);
+		return ResponseEntity.noContent().build();
+	}
+	
 }

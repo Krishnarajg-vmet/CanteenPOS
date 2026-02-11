@@ -58,5 +58,12 @@ public class CompanyRestController {
 		companyService.deleteCompany(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping("/activate/{id}")
+	public ResponseEntity<Void> activateCompanyById(
+			@PathVariable UUID id) {
+		companyService.acticateCompanyById(id);
+		return ResponseEntity.noContent().build();
+	}
 
 }

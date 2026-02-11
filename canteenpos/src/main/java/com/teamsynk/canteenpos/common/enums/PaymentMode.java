@@ -4,7 +4,8 @@ public enum PaymentMode {
 	
 	CASH(1, "Cash"),
 	CARD(2, "Card"),
-	UPI(3, "UPI");
+	UPI(3, "UPI"),
+	WALLET(4, "Wallet");
 	
 	private final int id;
 	private final String label;

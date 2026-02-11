@@ -59,5 +59,12 @@ public class StateRestController {
 		stateService.deleteStateById(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping("/activate/{id}")
+	public ResponseEntity<Void> activateStateById(
+					@PathVariable UUID id) {
+		stateService.activateStateById(id);
+		return ResponseEntity.noContent().build();
+	}
 
 }

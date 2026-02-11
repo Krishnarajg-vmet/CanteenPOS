@@ -13,6 +13,7 @@ public class AreaMapper {
 	public static Area toEntity(AreaRequestDto dto, City city) {
 		Area area = new Area();
 		area.setAreaName(dto.getAreaName());
+		area.setPincode(dto.getPincode());
 		area.setCity(city);
 		
 		return area;
@@ -23,8 +24,15 @@ public class AreaMapper {
 		return new AreaResponseDto(
 				area.getId(),
 				area.getAreaName(),
+				area.getPincode(),
 				area.getCity().getId(),
 				area.getCity().getCityName(),
+				area.getCity().getDistrict().getId(),
+				area.getCity().getDistrict().getDistrictName(),
+				area.getCity().getDistrict().getState().getId(),
+				area.getCity().getDistrict().getState().getStateName(),
+				area.getCity().getDistrict().getState().getCountry().getId(),
+				area.getCity().getDistrict().getState().getCountry().getCountryName(),
 				area.getIsActive(),
 				area.getCreatedDt(),
 				area.getModifiedDt(),

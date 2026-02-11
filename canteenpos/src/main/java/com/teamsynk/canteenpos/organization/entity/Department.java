@@ -1,11 +1,9 @@
 package com.teamsynk.canteenpos.organization.entity;
 
-import java.util.Set;
 import java.util.UUID;
 
 import com.teamsynk.canteenpos.common.BaseEntity;
 import com.teamsynk.canteenpos.common.util.IdGenerator;
-import com.teamsynk.canteenpos.user.entity.User;
 
 import jakarta.persistence.*;
 

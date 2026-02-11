@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.teamsynk.canteenpos.common.exception.ResourceNotFoundException;
+import com.teamsynk.canteenpos.common.util.IdGenerator;
 import com.teamsynk.canteenpos.location.dto.request.StateRequestDto;
 import com.teamsynk.canteenpos.location.dto.response.StateResponseDto;
 import com.teamsynk.canteenpos.location.entity.Country;
@@ -35,6 +36,7 @@ public class StateService {
                 );
 		State state = StateMapper.toEntity(dto, country);
 		state.setIsActive(true);
+		state.setCreatedBy(IdGenerator.newUUID());
 		return StateMapper.toDto(stateRepository.save(state));
 	}
 	
@@ -51,6 +53,7 @@ public class StateService {
 	            .orElseThrow(() -> new ResourceNotFoundException("State", id));
 
 	    existing.setStateName(dto.getStateName());
+	    existing.setModifiedBy(IdGenerator.newUUID());
 
 	    if (dto.getCountryId() != null &&
 	        !dto.getCountryId().equals(existing.getCountry().getId())) {
@@ -66,6 +69,7 @@ public class StateService {
 	    return StateMapper.toDto(stateRepository.save(existing));
 	}
 	
+	@Transactional(readOnly = true)
 	public List<StateResponseDto> getAllActiveStates() {
 		return stateRepository.findByIsActiveTrue()
 				.stream()
@@ -73,6 +77,7 @@ public class StateService {
 				.collect(Collectors.toList());
 	}
 	
+	@Transactional(readOnly = true)
 	public List<StateResponseDto> getAllStates() {
 		return stateRepository.findAll()
 				.stream()
@@ -85,6 +90,16 @@ public class StateService {
 		State existing = stateRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("State", id));
 		existing.setIsActive(false);
+		existing.setModifiedBy(IdGenerator.newUUID());
+		stateRepository.save(existing);
+	}
+	
+	@Transactional
+	public void activateStateById(UUID id) {
+		State existing = stateRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("State", id));
+		existing.setIsActive(true);
+		existing.setModifiedBy(IdGenerator.newUUID());
 		stateRepository.save(existing);
 	}
 

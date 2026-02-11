@@ -2,10 +2,11 @@ package com.teamsynk.canteenpos.common.enums;
 
 public enum PaymentStatus {
 	
-	PENDING(1, "Pending"),
-	PAID(2, "Paid"),
-	FAILED(3, "Failed"),
-	REFUNDED(4, "Refunded");
+	INITIATED(1, "Initiated"),
+	COMPLETED(2, "Completed"),
+    PROCESSING(3, "Processing"),
+    FAILED(4, "Failed"),
+    REFUNDED(5, "Refunded");
 	
 	private final int id;
 	private final String label;

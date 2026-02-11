@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.teamsynk.canteenpos.common.exception.ResourceNotFoundException;
+import com.teamsynk.canteenpos.common.util.IdGenerator;
 import com.teamsynk.canteenpos.location.dto.request.CountryRequestDto;
 import com.teamsynk.canteenpos.location.dto.response.CountryResponseDto;
 import com.teamsynk.canteenpos.location.entity.Country;
@@ -26,6 +27,7 @@ public class CountryService {
     @Transactional
     public CountryResponseDto createCountry(CountryRequestDto dto) {
         Country country = CountryMapper.toEntity(dto);
+        country.setCreatedBy(IdGenerator.newUUID());
         country.setIsActive(true);
         return CountryMapper.toDto(countryRepository.save(country));
     }
@@ -44,7 +46,7 @@ public class CountryService {
         existing.setCountryName(dto.getCountryName());
         existing.setCountryCode(dto.getCountryCode());
         existing.setNationality(dto.getNationality());
-
+        existing.setModifiedBy(IdGenerator.newUUID());
         return CountryMapper.toDto(countryRepository.save(existing));
     }
 
@@ -67,6 +69,16 @@ public class CountryService {
         Country existing = countryRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Country", id));
         existing.setIsActive(false);
+        existing.setModifiedBy(IdGenerator.newUUID());
+        countryRepository.save(existing);
+    }
+    
+    @Transactional
+    public void activateCountry(UUID id) {
+        Country existing = countryRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Country", id));
+        existing.setIsActive(true);
+        existing.setModifiedBy(IdGenerator.newUUID());
         countryRepository.save(existing);
     }
 }

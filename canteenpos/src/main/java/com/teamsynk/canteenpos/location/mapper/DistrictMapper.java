@@ -26,6 +26,8 @@ public class DistrictMapper {
 				district.getDistrictName(),
 				district.getState().getId(),
 				district.getState().getStateName(),
+				district.getState().getCountry().getId(),
+				district.getState().getCountry().getCountryName(),
 				district.getIsActive(),
 				district.getCreatedDt(),
 				district.getModifiedDt(),

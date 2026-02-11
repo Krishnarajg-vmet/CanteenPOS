@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.teamsynk.canteenpos.common.exception.ResourceNotFoundException;
+import com.teamsynk.canteenpos.common.util.IdGenerator;
 import com.teamsynk.canteenpos.location.dto.request.AreaRequestDto;
 import com.teamsynk.canteenpos.location.dto.response.AreaResponseDto;
 import com.teamsynk.canteenpos.location.entity.Area;
@@ -34,9 +35,10 @@ public class AreaService {
 		
 		Area area = AreaMapper.toEntity(dto, city);
 		area.setIsActive(true);
+		area.setCreatedBy(IdGenerator.newUUID());
 		return AreaMapper.toDto(areaRepository.save(area));
 	}
-	
+
 	public AreaResponseDto getAreaById(UUID id) {
 		Area area = areaRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Area", id));
@@ -49,7 +51,7 @@ public class AreaService {
 				.orElseThrow(() -> new ResourceNotFoundException("Area", id));
 		
 		existing.setAreaName(dto.getAreaName());
-		
+		existing.setModifiedBy(IdGenerator.newUUID());
 		if(dto.getCityId() != null &&
 				!dto.getCityId().equals(existing.getCity().getId())) {
 			City city = cityRepository.findById(dto.getCityId())
@@ -60,6 +62,7 @@ public class AreaService {
 		return AreaMapper.toDto(areaRepository.save(existing));
 	}
 	
+	@Transactional(readOnly = true)
 	public List<AreaResponseDto> getAllActiveAreas() {
 		return areaRepository.findByIsActiveTrue()
 				.stream()
@@ -67,6 +70,7 @@ public class AreaService {
 				.collect(Collectors.toList());
 	}
 	
+	@Transactional(readOnly = true)
 	public List<AreaResponseDto> getAllAreas() {
 		return areaRepository.findAll()
 				.stream()
@@ -79,6 +83,16 @@ public class AreaService {
 		Area existing = areaRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Area", id));
 		existing.setIsActive(false);
+		existing.setModifiedBy(IdGenerator.newUUID());
+		areaRepository.save(existing);
+	}
+	
+	@Transactional
+	public void activateAreaById(UUID id) {
+		Area existing = areaRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Area", id));
+		existing.setIsActive(true);
+		existing.setModifiedBy(IdGenerator.newUUID());
 		areaRepository.save(existing);
 	}
 }

@@ -6,8 +6,6 @@ import java.util.UUID;
 
 import com.teamsynk.canteenpos.common.BaseEntity;
 import com.teamsynk.canteenpos.common.util.IdGenerator;
-import com.teamsynk.canteenpos.organization.entity.Branch;
-import com.teamsynk.canteenpos.organization.entity.Department;
 import com.teamsynk.canteenpos.organization.entity.Employee;
 
 import jakarta.persistence.*;

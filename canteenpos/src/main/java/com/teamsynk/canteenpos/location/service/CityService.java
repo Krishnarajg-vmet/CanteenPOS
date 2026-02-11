@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.teamsynk.canteenpos.common.exception.ResourceNotFoundException;
+import com.teamsynk.canteenpos.common.util.IdGenerator;
 import com.teamsynk.canteenpos.location.dto.request.CityRequestDto;
 import com.teamsynk.canteenpos.location.dto.response.CityResponseDto;
 import com.teamsynk.canteenpos.location.entity.City;
@@ -34,6 +35,7 @@ public class CityService {
 		
 		City city = CityMapper.toEntity(dto, district);
 		city.setIsActive(true);
+		city.setCreatedBy(IdGenerator.newUUID());
 		return CityMapper.toDto(cityRepository.save(city));
 	}
 	
@@ -49,6 +51,7 @@ public class CityService {
 				.orElseThrow(() -> new ResourceNotFoundException("City", id));
 		
 		existing.setCityName(dto.getCityName());
+		existing.setModifiedBy(IdGenerator.newUUID());
 		
 		if(dto.getDistrictId() != null &&
 				!dto.getDistrictId().equals(existing.getDistrict().getId())) {
@@ -61,6 +64,7 @@ public class CityService {
 		return CityMapper.toDto(cityRepository.save(existing));
 	}
 	
+	@Transactional(readOnly = true)
 	public List<CityResponseDto> getAllActiveCities() {
 		return cityRepository.findByIsActiveTrue()
 				.stream()
@@ -68,6 +72,7 @@ public class CityService {
 				.collect(Collectors.toList());
 	}
 	
+	@Transactional(readOnly = true)
 	public List<CityResponseDto> getAllCities() {
 		return cityRepository.findAll()
 				.stream()
@@ -80,6 +85,16 @@ public class CityService {
 		City existing = cityRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("City", id));
 		existing.setIsActive(false);
+		existing.setModifiedBy(IdGenerator.newUUID());
+		cityRepository.save(existing);
+	}
+	
+	@Transactional
+	public void activateCityById(UUID id) {
+		City existing = cityRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("City", id));
+		existing.setIsActive(true);
+		existing.setModifiedBy(IdGenerator.newUUID());
 		cityRepository.save(existing);
 	}
 

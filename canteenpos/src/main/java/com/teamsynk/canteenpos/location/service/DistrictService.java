@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.teamsynk.canteenpos.common.exception.ResourceNotFoundException;
+import com.teamsynk.canteenpos.common.util.IdGenerator;
 import com.teamsynk.canteenpos.location.dto.request.DistrictRequestDto;
 import com.teamsynk.canteenpos.location.dto.response.DistrictResponseDto;
 import com.teamsynk.canteenpos.location.entity.District;
@@ -34,6 +35,7 @@ public class DistrictService {
 		
 		District district = DistrictMapper.toEntity(dto, state);
 		district.setIsActive(true);
+		district.setCreatedBy(IdGenerator.newUUID());
 		return DistrictMapper.toDto(districtRepository.save(district));
 	}
 	
@@ -48,7 +50,7 @@ public class DistrictService {
 		District existing = districtRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("District", id));
 		existing.setDistrictName(dto.getDistrictName());
-		
+		existing.setModifiedBy(IdGenerator.newUUID());
 		if(dto.getStateId() != null &&
 				!dto.getStateId().equals(existing.getState().getId())) {
 			State state = stateRepository.findById(dto.getStateId())
@@ -58,6 +60,7 @@ public class DistrictService {
 		return DistrictMapper.toDto(districtRepository.save(existing));
 	}
 	
+	@Transactional(readOnly = true)
 	public List<DistrictResponseDto> getAllActiveDistricts() {
 		return districtRepository.findByIsActiveTrue()
 				.stream()
@@ -65,6 +68,7 @@ public class DistrictService {
 				.collect(Collectors.toList());
 	}
 	
+	@Transactional(readOnly = true)
 	public List<DistrictResponseDto> getAllDistricts() {
 		return districtRepository.findAll()
 				.stream()
@@ -77,6 +81,15 @@ public class DistrictService {
 		District existing = districtRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("District", id));
 		existing.setIsActive(false);
+		districtRepository.save(existing);
+	}
+	
+	@Transactional
+	public void activateDistrictById(UUID id) {
+		District existing = districtRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("District", id));
+		existing.setIsActive(true);
+		existing.setModifiedBy(IdGenerator.newUUID());
 		districtRepository.save(existing);
 	}
 

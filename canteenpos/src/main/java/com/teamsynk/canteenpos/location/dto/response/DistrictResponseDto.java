@@ -9,19 +9,23 @@ public class DistrictResponseDto {
 	private String districtName;
 	private UUID stateId;
 	private String stateName;
+	private UUID countryId;
+	private String countryName;
 	private Boolean isActive;
 	private Instant createdDt;
 	private Instant modifiedDt;
 	private UUID createdBy;
 	private UUID modifiedBy;
 	
-	public DistrictResponseDto(UUID id, String districtName, UUID stateId, String stateName, Boolean isActive, Instant createdDt,
+	public DistrictResponseDto(UUID id, String districtName, UUID stateId, String stateName, UUID countryId, String countryName, Boolean isActive, Instant createdDt,
 			Instant modifiedDt, UUID createdBy, UUID modifiedBy) {
 		super();
 		this.id = id;
 		this.districtName = districtName;
 		this.stateId = stateId;
 		this.stateName = stateName;
+		this.countryId = countryId;
+		this.countryName = countryName;
 		this.isActive = isActive;
 		this.createdDt = createdDt;
 		this.modifiedDt = modifiedDt;
@@ -40,6 +44,14 @@ public class DistrictResponseDto {
 	}
 	public String getStateName() {
 		return stateName;
+	}
+	
+	public UUID getCountryId() {
+		return countryId;
+	}
+
+	public String getCountryName() {
+		return countryName;
 	}
 	public Boolean getIsActive() {
 		return isActive;

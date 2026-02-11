@@ -18,7 +18,14 @@ public class CompanyMapper {
 	}
 	
 	public static CompanyResponseDto toDto(Company company) {
-		return new CompanyResponseDto(company.getId(), company.getCompanyName());
+		return new CompanyResponseDto(
+				company.getId(),
+				company.getCompanyName(),
+				company.getIsActive(),
+				company.getCreatedDt(),
+				company.getModifiedDt(),
+				company.getCreatedBy(),
+				company.getModifiedBy());
 	}
 
 }

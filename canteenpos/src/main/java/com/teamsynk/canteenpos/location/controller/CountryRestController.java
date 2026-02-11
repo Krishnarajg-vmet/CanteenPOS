@@ -59,4 +59,10 @@ public class CountryRestController {
         countryService.deleteCountry(id);
         return ResponseEntity.noContent().build();
     }
+    
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<Void> activeCountry(@PathVariable UUID id) {
+        countryService.activateCountry(id);
+        return ResponseEntity.noContent().build();
+    }
 }

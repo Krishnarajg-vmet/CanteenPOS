@@ -57,5 +57,12 @@ public class DistrictRestController {
 		districtService.deleteDistrictById(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping("/activate/{id}")
+	public ResponseEntity<Void> activateDistricts(
+			@PathVariable UUID id) {
+		districtService.activateDistrictById(id);
+		return ResponseEntity.noContent().build();
+	}
 
 }

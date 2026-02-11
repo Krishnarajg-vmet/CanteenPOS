@@ -41,7 +41,5 @@ public class State extends BaseEntity {
 	public void setCountry(Country country) {
 		this.country = country;
 	}
-	
-	
 
 }

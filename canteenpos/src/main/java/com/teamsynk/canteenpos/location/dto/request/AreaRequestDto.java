@@ -5,6 +5,7 @@ import java.util.UUID;
 public class AreaRequestDto {
 	
 	private String areaName;
+	private String pincode;
 	private UUID cityId;
 	
 	public String getAreaName() {
@@ -18,6 +19,12 @@ public class AreaRequestDto {
 	}
 	public void setCityId(UUID cityId) {
 		this.cityId = cityId;
+	}
+	public String getPincode() {
+		return pincode;
+	}
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
 	}	
-
+	
 }

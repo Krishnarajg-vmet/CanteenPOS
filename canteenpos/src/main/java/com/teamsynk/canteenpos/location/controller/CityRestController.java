@@ -57,5 +57,12 @@ public class CityRestController {
 		cityService.deleteCityById(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping("/activate/{id}")
+	public ResponseEntity<Void> activateCityById(
+			@PathVariable UUID id) {
+		cityService.activateCityById(id);
+		return ResponseEntity.noContent().build();
+	}
 
 }
