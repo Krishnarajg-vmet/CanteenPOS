@@ -22,7 +22,12 @@ public class DepartmentMapper {
 		
 		return new DepartmentResponseDto(department.getId(),
 				department.getDepartmentName(),
-				department.getDepartmentCode());
+				department.getDepartmentCode(),
+				department.getIsActive(),
+				department.getCreatedDt(),
+				department.getModifiedDt(),
+				department.getCreatedBy(),
+				department.getModifiedBy());
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.teamsynk.canteenpos.organization.dto.response;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.UUID;
@@ -34,12 +35,17 @@ public class EmployeeResponseDto {
 	private String qualification;
 	private UUID homeBranchId;
 	private String homeBranchName;
+	private Boolean isActive;
+	private Instant createdDt;
+	private Instant modifiedDt;
+	private UUID createdBy;
+	private UUID modifiedBy;
 	
-	public EmployeeResponseDto(UUID id, Title title, String firstName, String lastName, String employeeCode, LocalDate dob, Gender gender,
-			MaritalStatus maritalStatus, BloodGroup bloodGroup, EmployeeType employeeType,
+	public EmployeeResponseDto(UUID id, Title title, String firstName, String lastName, String employeeCode,
+			LocalDate dob, Gender gender, MaritalStatus maritalStatus, BloodGroup bloodGroup, EmployeeType employeeType,
 			EmployeeCategory employeeCategory, Address address, UUID designationId, String designationName,
-			String mblNumber, String qualification, UUID homeBranchId, String homeBranchName) {
-		super();
+			String mblNumber, String qualification, UUID homeBranchId, String homeBranchName, Boolean isActive,
+			Instant createdDt, Instant modifiedDt, UUID createdBy, UUID modifiedBy) {
 		this.id = id;
 		this.title = title;
 		this.firstName = firstName;
@@ -58,60 +64,103 @@ public class EmployeeResponseDto {
 		this.qualification = qualification;
 		this.homeBranchId = homeBranchId;
 		this.homeBranchName = homeBranchName;
+		this.isActive = isActive;
+		this.createdDt = createdDt;
+		this.modifiedDt = modifiedDt;
+		this.createdBy = createdBy;
+		this.modifiedBy = modifiedBy;
 	}
+
 	public UUID getId() {
 		return id;
 	}
+
 	public Title getTitle() {
 		return title;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public String getEmployeeCode() {
 		return employeeCode;
 	}
+
 	public LocalDate getDob() {
 		return dob;
 	}
+
 	public Gender getGender() {
 		return gender;
 	}
+
 	public MaritalStatus getMaritalStatus() {
 		return maritalStatus;
 	}
+
 	public BloodGroup getBloodGroup() {
 		return bloodGroup;
 	}
+
 	public EmployeeType getEmployeeType() {
 		return employeeType;
 	}
+
 	public EmployeeCategory getEmployeeCategory() {
 		return employeeCategory;
 	}
+
 	public Address getAddress() {
 		return address;
 	}
+
 	public UUID getDesignationId() {
 		return designationId;
 	}
+
 	public String getDesignationName() {
 		return designationName;
 	}
+
 	public String getMblNumber() {
 		return mblNumber;
 	}
+
 	public String getQualification() {
 		return qualification;
 	}
+
 	public UUID getHomeBranchId() {
 		return homeBranchId;
 	}
+
 	public String getHomeBranchName() {
 		return homeBranchName;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public Instant getCreatedDt() {
+		return createdDt;
+	}
+
+	public Instant getModifiedDt() {
+		return modifiedDt;
+	}
+
+	public UUID getCreatedBy() {
+		return createdBy;
+	}
+
+	public UUID getModifiedBy() {
+		return modifiedBy;
 	}
 	@Transient
 	public int getAge() {

@@ -230,14 +230,24 @@ public class UserService {
                         ub.getBranch().getBranchName(),
                         ub.getBranch().getBranchCode(),
                         ub.getBranch().getCompany().getId(),
-                        ub.getBranch().getCompany().getCompanyName()))
+                        ub.getBranch().getCompany().getCompanyName(),
+                        ub.getBranch().getIsActive(),
+                        ub.getBranch().getCreatedDt(),
+                        ub.getBranch().getModifiedDt(),
+                        ub.getBranch().getCreatedBy(),
+                        ub.getBranch().getModifiedBy()))
                 .collect(Collectors.toSet());
 
         Set<DepartmentResponseDto> departments = user.getUserDepartments().stream()
                 .map(ud -> new DepartmentResponseDto(
                         ud.getDepartment().getId(),
                         ud.getDepartment().getDepartmentName(),
-                        ud.getDepartment().getDepartmentCode()))
+                        ud.getDepartment().getDepartmentCode(),
+                        ud.getDepartment().getIsActive(),
+                        ud.getDepartment().getCreatedDt(),
+                        ud.getDepartment().getModifiedDt(),
+                        ud.getDepartment().getCreatedBy(),
+                        ud.getDepartment().getModifiedBy()))
                 .collect(Collectors.toSet());
 
         return UserMapper.toDto(user, roles, branches, departments);

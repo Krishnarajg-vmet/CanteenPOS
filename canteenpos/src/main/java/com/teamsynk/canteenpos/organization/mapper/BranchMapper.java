@@ -26,7 +26,12 @@ public class BranchMapper {
 				branch.getBranchName(),
 				branch.getBranchCode(),
 				branch.getCompany().getId(),
-				branch.getCompany().getCompanyName());
+				branch.getCompany().getCompanyName(),
+				branch.getIsActive(),
+				branch.getCreatedDt(),
+				branch.getModifiedDt(),
+				branch.getCreatedBy(),
+				branch.getModifiedBy());
 	}
 
 }

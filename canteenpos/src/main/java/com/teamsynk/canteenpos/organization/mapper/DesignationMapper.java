@@ -20,7 +20,12 @@ public class DesignationMapper {
 	public static DesignationResponseDto toDto(Designation designation) {
 		return new DesignationResponseDto(
 				designation.getId(),
-				designation.getDesignationName());
+				designation.getDesignationName(),
+				designation.getIsActive(),
+				designation.getCreatedDt(),
+				designation.getModifiedDt(),
+				designation.getCreatedBy(),
+				designation.getModifiedBy());
 	}
 
 }

@@ -56,5 +56,12 @@ public class DepartmentRestController {
 		departmentService.deleteDepartmentById(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping("/activate/{id}")
+	public ResponseEntity<Void> activateDepartmentById(
+			@PathVariable UUID id) {
+		departmentService.activateDepartmentById(id);
+		return ResponseEntity.noContent().build();
+	}
 
 }

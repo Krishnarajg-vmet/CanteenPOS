@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.teamsynk.canteenpos.common.exception.ResourceNotFoundException;
+import com.teamsynk.canteenpos.common.util.IdGenerator;
 import com.teamsynk.canteenpos.organization.dto.request.BranchRequestDto;
 import com.teamsynk.canteenpos.organization.dto.response.BranchResponseDto;
 import com.teamsynk.canteenpos.organization.entity.Branch;
@@ -34,6 +35,7 @@ public class BranchService {
 		
 		Branch branch = BranchMapper.toEntity(request, company);
 		branch.setIsActive(true);
+		branch.setCreatedBy(IdGenerator.newUUID());
 		return BranchMapper.toDto(branchRepository.save(branch));
 	}
 	
@@ -49,7 +51,7 @@ public class BranchService {
 				.orElseThrow(() -> new ResourceNotFoundException("Branch", id));
 		existing.setBranchName(dto.getBranchName());
 		existing.setBranchCode(dto.getBranchCode());
-		
+		existing.setModifiedBy(IdGenerator.newUUID());
 		if(dto.getCompanyId() != null &&
 				!dto.getCompanyId().equals(existing.getCompany().getId())) {
 			Company company = companyRepository.findById(id)
@@ -59,6 +61,7 @@ public class BranchService {
 		return BranchMapper.toDto(branchRepository.save(existing));
 	}
 	
+	@Transactional(readOnly = true)
 	public List<BranchResponseDto> getAllActiveBranches() {
 		return branchRepository.findByIsActiveTrue()
 				.stream()
@@ -66,6 +69,7 @@ public class BranchService {
 				.collect(Collectors.toList());
 	}
 	
+	@Transactional(readOnly = true)
 	public List<BranchResponseDto> getAllBranches() {
 		return branchRepository.findAll()
 				.stream()
@@ -78,7 +82,16 @@ public class BranchService {
 		Branch existing = branchRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Branch", id));
 		existing.setIsActive(false);
+		existing.setModifiedBy(IdGenerator.newUUID());
 		branchRepository.save(existing);
 	}
-
+	
+	@Transactional
+	public void activateBranchById(UUID id) {
+		Branch existing = branchRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Branch", id));
+		existing.setIsActive(true);
+		existing.setModifiedBy(IdGenerator.newUUID());
+		branchRepository.save(existing);
+	}
 }

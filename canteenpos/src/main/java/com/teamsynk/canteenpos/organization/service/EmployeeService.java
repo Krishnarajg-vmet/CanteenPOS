@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.teamsynk.canteenpos.common.exception.ResourceNotFoundException;
+import com.teamsynk.canteenpos.common.util.IdGenerator;
 import com.teamsynk.canteenpos.organization.dto.request.EmployeeRequestDto;
 import com.teamsynk.canteenpos.organization.dto.response.EmployeeResponseDto;
 import com.teamsynk.canteenpos.organization.entity.Branch;
@@ -50,7 +51,7 @@ public class EmployeeService {
 
         Employee employee = EmployeeMapper.toEntity(request, branch, designation);
         employee.setIsActive(true);
-
+        employee.setCreatedBy(IdGenerator.newUUID());
         return EmployeeMapper.toDto(employeeRepository.save(employee));
     }
 
@@ -92,10 +93,11 @@ public class EmployeeService {
         existing.setQualification(dto.getQualification());
         existing.setDesignation(designation);
         existing.setHomeBranch(branch);
-
+        existing.setModifiedBy(IdGenerator.newUUID());
         return EmployeeMapper.toDto(employeeRepository.save(existing));
     }
 
+    @Transactional(readOnly = true)
     public List<EmployeeResponseDto> getAllActiveEmployees() {
         return employeeRepository.findByIsActiveTrue()
                 .stream()
@@ -103,6 +105,7 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<EmployeeResponseDto> getAllEmployees() {
         return employeeRepository.findAll()
                 .stream()
@@ -116,6 +119,16 @@ public class EmployeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", id));
 
         employee.setIsActive(false);
+        employee.setModifiedBy(IdGenerator.newUUID());
+        employeeRepository.save(employee);
+    }
+    
+    @Transactional
+    public void activateEmployeeById(UUID id) {
+    	Employee employee = employeeRepository.findById(id)
+    			.orElseThrow(() -> new ResourceNotFoundException("Employee", id));
+    	employee.setIsActive(true);
+        employee.setModifiedBy(IdGenerator.newUUID());
         employeeRepository.save(employee);
     }
 }

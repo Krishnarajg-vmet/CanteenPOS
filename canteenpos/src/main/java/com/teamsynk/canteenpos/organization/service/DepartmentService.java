@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.teamsynk.canteenpos.common.exception.ResourceNotFoundException;
+import com.teamsynk.canteenpos.common.util.IdGenerator;
 import com.teamsynk.canteenpos.organization.dto.request.DepartmentRequestDto;
 import com.teamsynk.canteenpos.organization.dto.response.DepartmentResponseDto;
 import com.teamsynk.canteenpos.organization.entity.Department;
@@ -28,7 +29,7 @@ public class DepartmentService {
 		
 		Department response = DepartmentMapper.toEntity(request);
 		response.setIsActive(true);
-		
+		response.setCreatedBy(IdGenerator.newUUID());
 		return DepartmentMapper.toDto(departmentRepository.save(response));
 	}
 	
@@ -45,10 +46,11 @@ public class DepartmentService {
 				.orElseThrow(() -> new ResourceNotFoundException("Department", id));
 		existing.setDepartmentName(dto.getDepartmentName());
 		existing.setDepartmentCode(dto.getDepartmentCode());
-		
+		existing.setModifiedBy(IdGenerator.newUUID());
 		return DepartmentMapper.toDto(departmentRepository.save(existing));
 	}
 	
+	@Transactional(readOnly = true)
 	public List<DepartmentResponseDto> getAllActiveDepartments() {
 		return departmentRepository.findByIsActiveTrue()
 				.stream()
@@ -56,6 +58,7 @@ public class DepartmentService {
 				.collect(Collectors.toList());
 	}
 	
+	@Transactional(readOnly = true)
 	public List<DepartmentResponseDto> getAllDepartments() {
 		return departmentRepository.findAll()
 				.stream()
@@ -68,6 +71,16 @@ public class DepartmentService {
 		Department existing = departmentRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Department", id));
 		existing.setIsActive(false);
+		existing.setModifiedBy(IdGenerator.newUUID());
+		departmentRepository.save(existing);
+	}
+	
+	@Transactional
+	public void activateDepartmentById(UUID id) {
+		Department existing = departmentRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Department", id));
+		existing.setIsActive(true);
+		existing.setModifiedBy(IdGenerator.newUUID());
 		departmentRepository.save(existing);
 	}
 

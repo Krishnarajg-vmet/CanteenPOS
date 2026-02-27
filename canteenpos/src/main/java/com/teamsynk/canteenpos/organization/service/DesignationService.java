@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.teamsynk.canteenpos.common.exception.ResourceNotFoundException;
+import com.teamsynk.canteenpos.common.util.IdGenerator;
 import com.teamsynk.canteenpos.organization.dto.request.DesignationRequestDto;
 import com.teamsynk.canteenpos.organization.dto.response.DesignationResponseDto;
 import com.teamsynk.canteenpos.organization.entity.Designation;
@@ -28,7 +29,7 @@ public class DesignationService {
 		
 		Designation designation = DesignationMapper.toEntity(request);
 		designation.setIsActive(true);
-		
+		designation.setCreatedBy(IdGenerator.newUUID());
 		return DesignationMapper.toDto(designationRepository.save(designation));
 	}
 	
@@ -47,10 +48,11 @@ public class DesignationService {
 				.orElseThrow(() -> new ResourceNotFoundException("Designation", id));
 		
 		existing.setDesignationName(dto.getDesignationName());
-		
+		existing.setModifiedBy(IdGenerator.newUUID());
 		return DesignationMapper.toDto(designationRepository.save(existing));
 	}
 	
+	@Transactional(readOnly = true)
 	public List<DesignationResponseDto> getAllActiveDesignations() {
 		return designationRepository.findByIsActiveTrue()
 				.stream()
@@ -58,6 +60,7 @@ public class DesignationService {
 				.collect(Collectors.toList());
 	}
 	
+	@Transactional(readOnly = true)
 	public List<DesignationResponseDto> getAllDesignations() {
 		return designationRepository.findAll()
 				.stream()
@@ -70,5 +73,15 @@ public class DesignationService {
 		Designation existing = designationRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Designation", id));
 		existing.setIsActive(false);
+		existing.setModifiedBy(IdGenerator.newUUID());
+		designationRepository.save(existing);
+	}
+	
+	public void activateDesignationById(UUID id) {
+		Designation existing = designationRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Designation", id));
+		existing.setIsActive(true);
+		existing.setModifiedBy(IdGenerator.newUUID());
+		designationRepository.save(existing);
 	}
 }

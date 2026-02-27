@@ -53,7 +53,12 @@ public class EmployeeMapper {
 				employee.getMblNumber(),
 				employee.getQualification(),
 				employee.getHomeBranch().getId(),
-				employee.getHomeBranch().getBranchName());
+				employee.getHomeBranch().getBranchName(),
+				employee.getIsActive(),
+				employee.getCreatedDt(),
+				employee.getModifiedDt(),
+				employee.getCreatedBy(),
+				employee.getModifiedBy());
 	}
 
 }

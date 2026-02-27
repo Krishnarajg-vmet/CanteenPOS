@@ -64,4 +64,12 @@ public class BranchRestController {
 		branchService.deleteBranchById(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping("/activate/{id}")
+	public ResponseEntity<Void> activateBranchById(
+			@PathVariable UUID id) {
+		branchService.activateBranchById(id);
+		return ResponseEntity.noContent().build();
+	}
+	
 }

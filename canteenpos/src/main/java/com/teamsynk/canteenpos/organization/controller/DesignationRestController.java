@@ -56,4 +56,11 @@ public class DesignationRestController {
 		designationService.deleteDesignationById(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping("/activate/{id}")
+	public ResponseEntity<Void> activateDesignationById(
+			@PathVariable UUID id) {
+		designationService.activateDesignationById(id);
+		return ResponseEntity.noContent().build();
+	}
 }
